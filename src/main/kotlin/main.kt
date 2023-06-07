@@ -2,27 +2,29 @@ data class Post(
     val id: Int,
     val ownerId: Int,
     val fromId: Int,
-    val createdBy: Int,
+    val createdBy: Int?,
     val date: Int,
     val text: String,
-    val replyOwnerId: Int,
-    val replyPostId: Int,
+    val replyOwnerId: Int?,
+    val replyPostId: Int?,
     val friendsOnly: Boolean = false,
     val comments: Comments,
-    val copyright: String,
+    val copyright: String?,
     val likes: Likes,
     val reposts: Reposts,
     val views: Views,
     val postType: String = "post",
-    val geo: Geo,
-    val signerId: Int,
+    val postSource : PostSource?,
+    val geo: Geo?,
+    val signerId: Int?,
+    val copyHistory: Array<Post>?,
     val canPin: Boolean = true,
     val canDelete: Boolean = true,
     val canEdit: Boolean = true,
     val isPinned: Boolean = false,
     val markedAsAds: Boolean = false,
     val isFavorite: Boolean = false,
-    val postponedId: Int
+    val postponedId: Int?
 )
 
 data class Comments(
@@ -54,6 +56,8 @@ data class Geo(
     val coordinates: String = " ",
     val place: String = " "
 )
+
+data class PostSource(val source : String?)
 
 object WallService {
     private var posts = emptyArray<Post>()

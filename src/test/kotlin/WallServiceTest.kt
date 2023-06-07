@@ -14,19 +14,21 @@ class WallServiceTest {
             0,
             0,
             0,
-            0,
+            null,
             101023,
             "Привет!",
-            0,
-            0,
+            null,
+            null,
             comments = Comments(),
-            copyright = "Copyright",
+            copyright = null,
             likes = Likes(),
-            geo = Geo(),
-            postponedId = 0,
+            geo = null,
+            postponedId = null,
             reposts = Reposts(),
-            signerId = 0,
-            views = Views()
+            signerId = null,
+            views = Views(),
+            postSource = PostSource(null),
+            copyHistory = null
         )
 
         val result = WallService.add(post).id
@@ -51,7 +53,9 @@ class WallServiceTest {
             postponedId = 0,
             reposts = Reposts(),
             signerId = 0,
-            views = Views()
+            views = Views(),
+            copyHistory = emptyArray(),
+            postSource = null
         )
         WallService.add(post)
 
@@ -71,7 +75,9 @@ class WallServiceTest {
             postponedId = 0,
             reposts = Reposts(),
             signerId = 0,
-            views = Views()
+            views = Views(),
+            postSource = PostSource(null),
+            copyHistory = null
         )
 
        val result = WallService.update(postUpdated)
@@ -97,7 +103,9 @@ class WallServiceTest {
             postponedId = 0,
             reposts = Reposts(),
             signerId = 0,
-            views = Views()
+            views = Views(),
+            copyHistory = emptyArray(),
+            postSource = null
         )
 
         val result = WallService.update(postUpdated)
