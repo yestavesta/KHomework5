@@ -1,3 +1,5 @@
+import javax.swing.text.Document
+
 data class Post(
     val id: Int,
     val ownerId: Int,
@@ -15,6 +17,7 @@ data class Post(
     val views: Views,
     val postType: String = "post",
     val postSource : PostSource?,
+    val attachments : Array<Attachment>?,
     val geo: Geo?,
     val signerId: Int?,
     val copyHistory: Array<Post>?,
@@ -26,6 +29,57 @@ data class Post(
     val isFavorite: Boolean = false,
     val postponedId: Int?
 )
+
+sealed class Attachment(val type : String)
+
+class PhotoAttachment(val video : Photo) : Attachment("photo")
+class VideoAttachment(val video : Video) : Attachment("video")
+class AudioAttachment(val video : Audio) : Attachment("audio")
+class DocumentAttachment(val video : Doc) : Attachment("doc")
+class LinkAttachment(val video : Link) : Attachment("link")
+
+data class Photo(
+    val id: Int,
+    val albumId: Int,
+    val ownerId: Int,
+    val userId: Int = 100,
+    val text: String?,
+    val date: Int,
+    val sizes: Array<Size>,
+    val width: Int,
+    val height: Int
+)
+
+data class Video(
+    val id: Int,
+    val ownerId: Int,
+    val title: String,
+    val description: String?,
+    val duration: Int,
+    val firstFrame320: String,
+    val date: Int,
+    val views: Int = 0,
+    val comments: Int = 0
+)
+
+data class Audio(
+    val id: Int,
+    val ownerId: Int,
+    val artist: String,
+    val title: String,
+    val duration: Int,
+    val url: String,
+    val lyricsId: Int?,
+    val albumId: Int?,
+    val genreId: Int?,
+    val date: Int,
+    val noSearch: Boolean = false,
+    val isHQ: Boolean
+)
+data class Doc(val id : Int, val ownerId: Int, val title: String, val size: Int, val ext: String, val url: String, val date: Int, val type: Int = 1)
+data class Link(val url: String, val title: String, val caption : String?, val description: String, val photo: Photo?)
+
+data class Size(val type: String, val url: String, val width: Int, val height: Int)
 
 data class Comments(
     val count: Int = 0,
@@ -57,7 +111,7 @@ data class Geo(
     val place: String = " "
 )
 
-data class PostSource(val source : String?)
+data class PostSource(val type: String = "vk", val platform : String?, val data : String?, val url : String?)
 
 object WallService {
     private var posts = emptyArray<Post>()

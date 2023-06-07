@@ -27,8 +27,9 @@ class WallServiceTest {
             reposts = Reposts(),
             signerId = null,
             views = Views(),
-            postSource = PostSource(null),
-            copyHistory = null
+            postSource = null,
+            copyHistory = null,
+            attachments = emptyArray()
         )
 
         val result = WallService.add(post).id
@@ -55,7 +56,8 @@ class WallServiceTest {
             signerId = 0,
             views = Views(),
             copyHistory = emptyArray(),
-            postSource = null
+            postSource = null,
+            attachments = emptyArray()
         )
         WallService.add(post)
 
@@ -76,8 +78,9 @@ class WallServiceTest {
             reposts = Reposts(),
             signerId = 0,
             views = Views(),
-            postSource = PostSource(null),
-            copyHistory = null
+            postSource = null,
+            copyHistory = null,
+            attachments = emptyArray()
         )
 
        val result = WallService.update(postUpdated)
@@ -105,7 +108,8 @@ class WallServiceTest {
             signerId = 0,
             views = Views(),
             copyHistory = emptyArray(),
-            postSource = null
+            postSource = null,
+            attachments = emptyArray()
         )
 
         val result = WallService.update(postUpdated)
