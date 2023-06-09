@@ -1,5 +1,6 @@
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
 
 class WallServiceTest {
     @Before
@@ -83,7 +84,7 @@ class WallServiceTest {
             attachments = emptyArray()
         )
 
-       val result = WallService.update(postUpdated)
+        val result = WallService.update(postUpdated)
         assertTrue(result)
     }
 
@@ -114,5 +115,153 @@ class WallServiceTest {
 
         val result = WallService.update(postUpdated)
         assertFalse(result)
+    }
+
+    @Test
+    fun commentAdded() {
+        val post = Post(
+            0,
+            0,
+            0,
+            0,
+            101023,
+            "Привет!",
+            0,
+            0,
+            comments = Comments(),
+            copyright = "Copyright",
+            likes = Likes(),
+            geo = Geo(),
+            postponedId = 0,
+            reposts = Reposts(),
+            signerId = 0,
+            views = Views(),
+            copyHistory = emptyArray(),
+            postSource = null,
+            attachments = emptyArray()
+        )
+        val comment = Comment(1, 1, 1, "comment", null, null, null, emptyArray())
+        // val fakeComment = Comment(2, 1, 1, "comment", null, null, null, emptyArray())
+        WallService.add(post)
+        val result = WallService.createComment(1, comment)
+        assertEquals(comment, result)
+    }
+
+    @Test(expected = WallService.PostNotFoundException::class)
+    fun shouldThrowPostNotFound() {
+        val post = Post(
+            0,
+            0,
+            0,
+            0,
+            101023,
+            "Привет!",
+            0,
+            0,
+            comments = Comments(),
+            copyright = "Copyright",
+            likes = Likes(),
+            geo = Geo(),
+            postponedId = 0,
+            reposts = Reposts(),
+            signerId = 0,
+            views = Views(),
+            copyHistory = emptyArray(),
+            postSource = null,
+            attachments = emptyArray()
+        )
+        val comment = Comment(1, 1, 1, "comment", null, null, null, emptyArray())
+        WallService.add(post)
+        WallService.createComment(2, comment)
+    }
+
+    @Test
+    fun reportAdded() {
+        val post = Post(
+            0,
+            0,
+            0,
+            0,
+            101023,
+            "Привет!",
+            0,
+            0,
+            comments = Comments(),
+            copyright = "Copyright",
+            likes = Likes(),
+            geo = Geo(),
+            postponedId = 0,
+            reposts = Reposts(),
+            signerId = 0,
+            views = Views(),
+            copyHistory = emptyArray(),
+            postSource = null,
+            attachments = emptyArray()
+        )
+        val comment = Comment(1, 1, 1, "comment", null, null, null, emptyArray())
+        WallService.add(post)
+        WallService.createComment(1, comment)
+        val result = WallService.reportComment(1, 1)
+        assertEquals(1, result)
+    }
+
+    @Test(expected = WallService.CommentNotFoundException::class)
+    fun shouldThrowCommentNotFound() {
+        val post = Post(
+            0,
+            0,
+            0,
+            0,
+            101023,
+            "Привет!",
+            0,
+            0,
+            comments = Comments(),
+            copyright = "Copyright",
+            likes = Likes(),
+            geo = Geo(),
+            postponedId = 0,
+            reposts = Reposts(),
+            signerId = 0,
+            views = Views(),
+            copyHistory = emptyArray(),
+            postSource = null,
+            attachments = emptyArray()
+        )
+        val comment = Comment(1, 1, 1, "comment", null, null, null, emptyArray())
+        // val fakeComment = Comment(2, 1, 1, "comment", null, null, null, emptyArray())
+        WallService.add(post)
+        WallService.createComment(1, comment)
+        WallService.reportComment(2, 1)
+    }
+
+    @Test(expected = WallService.ReasonNotFoundException::class)
+    fun shouldThrowReasonNotFound() {
+        val post = Post(
+            0,
+            0,
+            0,
+            0,
+            101023,
+            "Привет!",
+            0,
+            0,
+            comments = Comments(),
+            copyright = "Copyright",
+            likes = Likes(),
+            geo = Geo(),
+            postponedId = 0,
+            reposts = Reposts(),
+            signerId = 0,
+            views = Views(),
+            copyHistory = emptyArray(),
+            postSource = null,
+            attachments = emptyArray()
+        )
+        val comment = Comment(1, 1, 1, "comment", null, null, null, emptyArray())
+        // val fakeComment = Comment(2, 1, 1, "comment", null, null, null, emptyArray())
+        WallService.add(post)
+        WallService.createComment(1, comment)
+        WallService.reportComment(1, 9)
     }
 }
